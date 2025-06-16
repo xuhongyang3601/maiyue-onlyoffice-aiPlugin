@@ -28,6 +28,31 @@
       }
     });
   }
+  // 更新浮动窗口位置
+  function updateFloatingWindowPosition() {
+    const floatingWindow = window.parent.document.getElementById("ai-flota-window");
+    if (floatingWindow) {
+      let rect = window.parent.document
+        .getElementById("id_target_cursor")
+        .getBoundingClientRect();
+      floatingWindow.style.top = `${rect.top - rect.height - 30}px`;
+      floatingWindow.style.left = `${rect.right}px`;
+    }
+  }
+  // 处理目标位置变化事件
+  function handleTargetPositionChanged() {
+    window.Asc.plugin.executeMethod("GetSelectedContent", [], (content) => {
+      if (content) {
+        // 更新浮动窗口位置
+        if (window.parent.document
+          .getElementById("ai-flota-window")) {
+          updateFloatingWindowPosition();
+        }
+      } else {
+        hideFloatingWindow();
+      }
+    });
+  }
   // 创建浮动窗口
   function createFloatingWindow(content) {
     setTimeout(() => {
@@ -53,10 +78,8 @@
         },
       ];
       const buttonContainer = $(
-        `<div id="ai-flota-window" style='position:absolute;top:${
-          rect.top - rect.height
-        }px;left:${
-          rect.right
+        `<div id="ai-flota-window" style='position:absolute;top:${rect.top - rect.height
+        }px;left:${rect.right
         }px;background-color:#fff;padding:10px;border-radius:8px;z-index:1000'></div>`
       );
       $.each(btns, (index, btn) => {
@@ -73,7 +96,6 @@
             },
             "*"
           );
-          console.log(markdownToHtml("```markdown"));
         });
         buttonContainer.append(button);
       });
@@ -81,18 +103,10 @@
       window.parent.document.body.appendChild(buttonContainer[0]);
     }, 50);
   }
-  // 处理文档点击事件
-  function handleDocumentClick(event) {
-    window.Asc.plugin.executeMethod("GetSelectedContent", [], (content) => {
-      if (!content) {
-        hideFloatingWindow();
-      }
-    });
-  }
   // 插入 AI 内容
   function insertAiContent(content) {
     clearSelectionOverlay();
-    window.Asc.scope.insertAiContentData = markdownToHtml(content);
+    // window.Asc.scope.insertAiContentData = markdownToHtml(content);
     window.Asc.plugin.callCommand(
       () => {
         let doc = Api.GetDocument();
@@ -103,7 +117,7 @@
           bold: false,
           italic: false,
           underline: false,
-          fontSize: 11, // 默认字号
+          fontSize: 16, // 默认字号
           fontFamily: "Calibri", // 默认字体
         };
 
@@ -158,10 +172,10 @@
   function clearSelectionOverlay() {
     if (!window.parent.document.getElementById("onlyoffice-selection-hider")) {
       const css = `
-        #id_viewer_overlay{
-            display:none !important;
-        }
-    `;
+          #id_viewer_overlay{
+              display:none !important;
+          }
+      `;
       const style = document.createElement("style");
       style.id = "onlyoffice-selection-hider";
       style.textContent = css;
@@ -183,7 +197,7 @@
           break;
       }
     });
-    Asc.plugin.attachEvent("onClick", handleDocumentClick);
+    Asc.plugin.attachEvent("onTargetPositionChanged", handleTargetPositionChanged);
     handleSelectionChange();
   };
 })(window, undefined);

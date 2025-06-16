@@ -1,7 +1,7 @@
 {
   "name": "迈越office Ai插件",
   "guid": "asc.{1616AE85-5DBE-4B6B-A0A9-455C4F1503AI}",
-  "version" : "1.0.1",
+  "version": "1.0.1",
   "variations": [
     {
       "description": "迈越office Ai插件",
@@ -15,10 +15,10 @@
       "isInsideMode": false,
       "initDataType": "none",
       "initData": "",
-      "initOnSelectionChanged": false,
+      "initOnSelectionChanged": true,
       "isUpdateOleOnResize": true,
       "buttons": [],
-      "events": ["onClick"]
+      "events": ["onTargetPositionChanged"]
     }
   ]
 }
