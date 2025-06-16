@@ -15,7 +15,7 @@
       "isInsideMode": false,
       "initDataType": "none",
       "initData": "",
-      "initOnSelectionChanged": true,
+      "initOnSelectionChanged": false,
       "isUpdateOleOnResize": true,
       "buttons": [],
       "events": ["onClick"]
