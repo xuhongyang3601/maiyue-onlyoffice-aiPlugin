@@ -89,6 +89,7 @@
           window.parent.parent.postMessage(
             {
               command: "aiTabs",
+              frameEditorId: window.parent.frameEditorId,
               data: {
                 doc: content,
                 aiType: btn.aiType,
@@ -146,6 +147,7 @@
             window.parent.parent.postMessage(
               {
                 command: "insertAiContent",
+                frameEditorId: window.parent.frameEditorId,
               },
               "*"
             );
@@ -163,6 +165,7 @@
       window.parent.parent.postMessage(
         {
           command: "showSelectionOverlay",
+          frameEditorId: window.parent.frameEditorId,
         },
         "*"
       );
